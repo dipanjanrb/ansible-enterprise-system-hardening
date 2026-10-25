@@ -1,0 +1,29 @@
+---
+- name: "Create node_exporter system group"
+  ansible.builtin.group:
+    name: node_exporter
+    system: true
+    state: present
+
+- name: "Create node_exporter system user"
+  ansible.builtin.user:
+    name: node_exporter
+    group: node_exporter
+    shell: /sbin/nologin
+    system: true
+    create_home: false
+
+- name: "Install systemd unit service"
+  ansible.builtin.template:
+    src: node_exporter.service.j2
+    dest: /etc/systemd/system/node_exporter.service
+    mode: '0644'
+  notify:
+    - reload systemd
+    - restart node_exporter
+
+- name: "Ensure node_exporter service is enabled and running"
+  ansible.builtin.systemd:
+    name: node_exporter
+    state: started
+    enabled: true

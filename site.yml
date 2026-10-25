@@ -1,0 +1,12 @@
+---
+- name: "Enterprise Linux Baseline & CIS Security Hardening"
+  hosts: all
+  gather_facts: true
+  become: true
+
+  roles:
+    - role: cis_hardening
+      tags: [security, hardening, cis]
+
+    - role: node_exporter
+      tags: [monitoring, metrics, node_exporter]

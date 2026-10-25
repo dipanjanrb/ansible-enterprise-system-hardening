@@ -1,0 +1,15 @@
+---
+# SSH hardening defaults
+sshd_port: 22
+sshd_permit_root_login: "no"
+sshd_password_authentication: "no"
+sshd_x11_forwarding: "no"
+sshd_max_auth_tries: 3
+sshd_client_alive_interval: 300
+sshd_client_alive_count_max: 2
+
+# Sysctl kernel tuning defaults
+sysctl_tcp_syncookies: 1
+sysctl_ip_forward: 0
+sysctl_accept_redirects: 0
+sysctl_rp_filter: 1

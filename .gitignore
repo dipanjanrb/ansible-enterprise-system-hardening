@@ -1,0 +1,7 @@
+*.retry
+*.log
+.DS_Store
+.cache/
+.vault_pass
+__pycache__/
+.molecule/

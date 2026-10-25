@@ -1,0 +1,6 @@
+---
+- name: "Apply SSH security configurations"
+  ansible.builtin.include_tasks: ssh.yml
+
+- name: "Apply Kernel & Sysctl security hardening"
+  ansible.builtin.include_tasks: sysctl.yml

@@ -1,0 +1,15 @@
+---
+- name: "Harden kernel network parameters via sysctl"
+  ansible.posix.sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    state: present
+    reload: true
+    sysctl_set: true
+  loop:
+    - { name: 'net.ipv4.tcp_syncookies', value: "{{ sysctl_tcp_syncookies }}" }
+    - { name: 'net.ipv4.ip_forward', value: "{{ sysctl_ip_forward }}" }
+    - { name: 'net.ipv4.conf.all.accept_redirects', value: "{{ sysctl_accept_redirects }}" }
+    - { name: 'net.ipv4.conf.default.accept_redirects', value: "{{ sysctl_accept_redirects }}" }
+    - { name: 'net.ipv4.conf.all.rp_filter', value: "{{ sysctl_rp_filter }}" }
+    - { name: 'net.ipv4.conf.default.rp_filter', value: "{{ sysctl_rp_filter }}" }

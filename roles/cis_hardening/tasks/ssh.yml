@@ -1,0 +1,16 @@
+---
+- name: "Enforce CIS SSH configuration parameters"
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+    validate: "/usr/sbin/sshd -t -f %s"
+  loop:
+    - { regexp: '^#?PermitRootLogin', line: 'PermitRootLogin {{ sshd_permit_root_login }}' }
+    - { regexp: '^#?PasswordAuthentication', line: 'PasswordAuthentication {{ sshd_password_authentication }}' }
+    - { regexp: '^#?X11Forwarding', line: 'X11Forwarding {{ sshd_x11_forwarding }}' }
+    - { regexp: '^#?MaxAuthTries', line: 'MaxAuthTries {{ sshd_max_auth_tries }}' }
+    - { regexp: '^#?ClientAliveInterval', line: 'ClientAliveInterval {{ sshd_client_alive_interval }}' }
+    - { regexp: '^#?ClientAliveCountMax', line: 'ClientAliveCountMax {{ sshd_client_alive_count_max }}' }
+  notify: restart sshd

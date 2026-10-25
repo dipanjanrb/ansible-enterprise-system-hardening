@@ -1,0 +1,19 @@
+[Unit]
+Description=Prometheus Node Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=node_exporter
+Group=node_exporter
+Type=simple
+ExecStart=/usr/local/bin/node_exporter \
+  --collector.systemd \
+  --collector.processes \
+  --web.listen-address=:9100
+
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
